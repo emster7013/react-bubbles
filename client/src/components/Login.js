@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import axiosWithAuth from '../util/axiosWithAuth';
+import axios from 'axios';
 import styled from 'styled-components';
 
 const LoginDiv = styled.div `
 background: red;
+align-content: center;
 
 `
 
@@ -12,6 +13,7 @@ const Login = props => {
     username:'',
     password:''
   })
+  
 
   const handleChange = e =>{
     setLoginz({...loginz, [e.target.name]:
@@ -20,11 +22,12 @@ const Login = props => {
 
   const handleSubmit = e =>{
     e.preventDefault();
-    axiosWithAuth() 
-    .put('/login', loginz)
-    .then(res =>{localStorage.setItem('token', res.data.payload);
-  setLoginz(loginz)
-  props.history.push('/colors')
+    axios 
+    .post('http://localhost:5000/api/login', loginz)
+    .then(res =>{
+      console.log('login data', res.data)
+      localStorage.setItem('token', res.data.payload);setLoginz(loginz)
+      props.history.push('/protected')
   })
   .catch(err=>{console.log('inavlid login', err);
   });
@@ -36,7 +39,7 @@ const Login = props => {
     <form onSubmit={handleSubmit}>
       <LoginDiv>
         <div>
-          <h1>Welcome to the Login!</h1>
+          <h1>Welcome to the Bubbles Login!</h1>
     <input
       type="text"
       name="username"

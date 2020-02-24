@@ -1,2 +1,3 @@
 import {createContext} from "react";
-export const BubblesContext = createContext()
+ const BubblesContext = createContext()
+  export default BubblesContext;
